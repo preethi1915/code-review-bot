@@ -1,11 +1,29 @@
-- name: SonarQube Scan
-  uses: SonarSource/sonarqube-scan-action@v5
-  with:
-    args: >
-      -Dsonar.projectKey=preethi1915_code-review-bot
-      -Dsonar.organization=preethi1915
-      -Dsonar.verbose=true
-      -Dsonar.newCode.period=1
-      -Dsonar.python.version=3.10
-  env:
-    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  sonarqube:
+    name: SonarQube
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+          
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v5
+        with:
+          args: >
+            -Dsonar.projectKey=preethi1915_code-review-bot
+            -Dsonar.organization=preethi1915
+            -Dsonar.verbose=true
+            -Dsonar.newCode.period=1
+            -Dsonar.python.version=3.10
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
