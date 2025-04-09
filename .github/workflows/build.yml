@@ -19,5 +19,6 @@ jobs:
           args: >
             -Dsonar.projectKey=preethi1915_code-review-bot
             -Dsonar.organization=preethi1915
+            -Dsonar.verbose=true
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
